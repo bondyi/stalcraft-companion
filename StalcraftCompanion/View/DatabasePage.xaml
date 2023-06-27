@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StalcraftCompanion.View.DatabasePage"
+             xmlns:model="clr-namespace:StalcraftCompanion.Model"
+             xmlns:viewmodel="clr-namespace:StalcraftCompanion.ViewModel"
+             x:DataType="viewmodel:GameItemsViewModel"
+             Title="Database">
+
+    <Grid RowDefinitions="*,Auto">
+        <ContentView Grid.RowSpan="2">
+            <CollectionView ItemsSource="{Binding ObservableGameItems}" 
+                            SelectionMode="None"
+                            RemainingItemsThreshold="5"
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
+                            VerticalScrollBarVisibility="Always">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:GameItem">
+                        <Frame Margin="5">
+                            <Grid ColumnDefinitions="Auto, Auto">
+
+                                <Border>
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10,10,10,10" />
+                                    </Border.StrokeShape>
+
+                                    <Image Grid.Column="0"
+                                           WidthRequest="96"
+                                           HeightRequest="96"
+                                           HorizontalOptions="Center"
+                                           Source="{Binding Icon}" />
+                                </Border>
+
+                                <Label Grid.Column="1"
+                                       FontSize="Large"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       Text="{Binding Name.Lines.En}" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ContentView>
+
+        <Button
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Margin="8"
+            Command="{Binding GetGameItemsCommand}"
+            IsEnabled="{Binding IsNotBusy}"
+            Text="Update" />
+
+
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Fill"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            Color="{StaticResource Primary}"
+            VerticalOptions="Center" />
+
+    </Grid>
+
+</ContentPage>
