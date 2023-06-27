@@ -20,10 +20,13 @@ namespace StalcraftCompanion.ViewModel
         [ObservableProperty]
         bool isRefreshing;
 
+        public bool IsInit { get; private set; }
+
         public GameItemsViewModel(GameItemService gameItemService, IConnectivity connectivity)
         {
             this.gameItemService = gameItemService;
             this.connectivity = connectivity;
+            IsInit = false;
         }
 
         [RelayCommand]
@@ -36,7 +39,7 @@ namespace StalcraftCompanion.ViewModel
         }
 
         [RelayCommand]
-        async Task GetGameItemsAsync()
+        public async Task GetGameItemsAsync()
         {
             if (IsBusy) return;
 
@@ -63,6 +66,7 @@ namespace StalcraftCompanion.ViewModel
             finally
             {
                 IsBusy = false;
+                IsInit = true;
                 IsRefreshing = false;
             }
         }
@@ -70,7 +74,7 @@ namespace StalcraftCompanion.ViewModel
         [RelayCommand]
         void LoadMore()
         {
-            AddGameItems();
+            MainThread.BeginInvokeOnMainThread(AddGameItems);
         }
 
         private void AddGameItems()

@@ -10,4 +10,15 @@ public partial class DatabasePage : ContentPage
 
 		BindingContext = viewModel;
 	}
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+		var viewModel = (GameItemsViewModel)BindingContext;
+
+		if (viewModel.IsInit) return;
+
+		await viewModel.GetGameItemsAsync();
+    }
 }
