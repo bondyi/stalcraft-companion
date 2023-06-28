@@ -55,7 +55,14 @@ namespace StalcraftCompanion.ViewModel
 
                 gameItems = await gameItemService.GetGameItems();
 
-                if (ObservableGameItems.Count != 0) ObservableGameItems.Clear();
+                if (!IsInit)
+                {
+                    foreach (var gameItem in gameItems)
+                    {
+                        gameItem.Data = GITHUB_URL + gameItem.Data;
+                        gameItem.Icon = GITHUB_URL + gameItem.Icon;
+                    }
+                }
 
                 AddGameItems();
             }
@@ -74,19 +81,14 @@ namespace StalcraftCompanion.ViewModel
         [RelayCommand]
         void LoadMore()
         {
-            MainThread.BeginInvokeOnMainThread(AddGameItems);
+            AddGameItems();
         }
 
         private void AddGameItems()
         {
-            var count = ObservableGameItems.Count;
+            if (ObservableGameItems.Count == gameItems.Count) return;
 
-            for (var i = count; i < count + 20; ++i)
-            {
-                gameItems[i].Data = GITHUB_URL + gameItems[i].Data;
-                gameItems[i].Icon = GITHUB_URL + gameItems[i].Icon;
-                ObservableGameItems.Add(gameItems[i]);
-            }
+            ObservableGameItems.Add(gameItems[ObservableGameItems.Count]);
         }
 
     }

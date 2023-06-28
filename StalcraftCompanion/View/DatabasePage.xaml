@@ -7,41 +7,39 @@
              x:DataType="viewmodel:GameItemsViewModel"
              Title="Database">
 
-    <Grid RowDefinitions="*,Auto">
-        <ContentView Grid.RowSpan="2">
-            <CollectionView ItemsSource="{Binding ObservableGameItems}" 
+    <Grid>
+        <RefreshView Command="{Binding GetGameItemsCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            <ContentView Grid.RowSpan="2">
+                <CollectionView ItemsSource="{Binding ObservableGameItems}" 
                             SelectionMode="None"
                             RemainingItemsThreshold="1"
                             RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
-            <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:GameItem">
-                        <Frame Margin="5">
-                            <Grid ColumnDefinitions="Auto, Auto"
-                                  ColumnSpacing="10">
-
-                                <Border>
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10,10,10,10" />
-                                    </Border.StrokeShape>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:GameItem">
+                            <Frame Margin="5">
+                                <Grid ColumnDefinitions="Auto, Auto"
+                                      ColumnSpacing="10"
+                                      HeightRequest="40">
 
                                     <Image Grid.Column="0"
-                                           WidthRequest="96"
-                                           HeightRequest="96"
+                                           WidthRequest="30"
+                                           HeightRequest="30"
                                            HorizontalOptions="Center"
                                            Source="{Binding Icon}" />
-                                </Border>
 
-                                <Label Grid.Column="1"
+                                    <Label Grid.Column="1"
                                        FontSize="Large"
                                        VerticalOptions="Center"
                                        HorizontalOptions="Center"
                                        Text="{Binding Name.Lines.En}" />
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </ContentView>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ContentView>
+        </RefreshView>
 
         <ActivityIndicator
             Grid.RowSpan="2"

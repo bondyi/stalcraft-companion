@@ -9,9 +9,4 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Secondary}" StatusBarStyle="LightContent"/>
     </ContentPage.Behaviors>
 
-    <VerticalStackLayout>
-        
-        
-        
-    </VerticalStackLayout>
 </ContentPage>

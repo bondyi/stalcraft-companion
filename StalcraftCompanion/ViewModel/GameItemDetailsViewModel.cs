@@ -7,6 +7,6 @@ namespace StalcraftCompanion.ViewModel
     public partial class GameItemDetailsViewModel : BaseViewModel
     {
         [ObservableProperty]
-        GameItemInfo gameItemInfo;
+        GameItem gameItem;
     }
 }
