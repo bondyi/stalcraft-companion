@@ -48,8 +48,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\database_solid.svg" />
+	  <None Remove="Resources\Images\house_solid.svg" />
+	  <None Remove="Resources\Images\user_solid.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="View\HomePage.xaml.cs">
+	    <DependentUpon>HomePage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -62,10 +75,6 @@
 	  <MauiXaml Update="View\ProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 
 </Project>

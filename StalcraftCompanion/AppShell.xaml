@@ -8,13 +8,16 @@
     xmlns:view="clr-namespace:StalcraftCompanion.View">
 
     <TabBar>
-        <Tab Title="Home">
-            <ShellContent ContentTemplate="{DataTemplate view:MainPage}" Route="MainPage"/>
+        <Tab Title="Home"
+             Icon="house_solid.svg">
+            <ShellContent ContentTemplate="{DataTemplate view:HomePage}" Route="HomePage"/>
         </Tab>
-        <Tab Title="Database">
+        <Tab Title="Database"
+             Icon="database_solid.svg">
             <ShellContent ContentTemplate="{DataTemplate view:DatabasePage}" Route="DatabasePage"/>
         </Tab>
-        <Tab Title="Profile">
+        <Tab Title="Profile"
+             Icon="user_solid.svg">
             <ShellContent ContentTemplate="{DataTemplate view:ProfilePage}" Route="ProfilePage"/>
         </Tab>
     </TabBar>
