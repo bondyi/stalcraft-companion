@@ -79,6 +79,13 @@ namespace StalcraftCompanion.ViewModel
         }
 
         [RelayCommand]
+        async void RefreshAsync()
+        {
+            ObservableGameItems.Clear();
+            await GetGameItemsAsync();
+        }
+
+        [RelayCommand]
         void LoadMore()
         {
             AddGameItems();
