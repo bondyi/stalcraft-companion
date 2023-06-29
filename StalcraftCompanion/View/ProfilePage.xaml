@@ -2,11 +2,31 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StalcraftCompanion.View.ProfilePage"
+             x:DataType="viewmodel:ProfileViewModel"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:StalcraftCompanion.ViewModel"
              Title="Profile">
 
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Secondary}" StatusBarStyle="LightContent"/>
     </ContentPage.Behaviors>
+
+    <Grid>
+        <Button Text="Log in using EXBO Account"
+                FontSize="Medium"
+                Command="{Binding LoginCommand}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+
+        <StackLayout x:Name="ProfileView"
+                     >
+            <Button Text="Log out"
+                IsVisible="false"
+                FontSize="Medium"
+                Command="{Binding LogoutCommand}"
+                VerticalOptions="End"
+                HorizontalOptions="Center"/>
+        </StackLayout>
+    </Grid>
 
 </ContentPage>

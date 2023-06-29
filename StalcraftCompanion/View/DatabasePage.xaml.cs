@@ -4,7 +4,7 @@ namespace StalcraftCompanion.View;
 
 public partial class DatabasePage : ContentPage
 {
-	public DatabasePage(GameItemsViewModel viewModel)
+	public DatabasePage(DatabaseViewModel viewModel)
 	{
 		InitializeComponent();
 
@@ -15,9 +15,7 @@ public partial class DatabasePage : ContentPage
     {
         base.OnAppearing();
 
-		var viewModel = (GameItemsViewModel)BindingContext;
-
-		if (viewModel.IsInit) return;
+		var viewModel = (DatabaseViewModel)BindingContext;
 
 		await viewModel.GetGameItemsAsync();
     }

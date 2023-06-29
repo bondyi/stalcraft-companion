@@ -2,11 +2,59 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StalcraftCompanion.View.HomePage"
+             x:DataType="viewmodel:HomeViewModel"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:StalcraftCompanion.ViewModel"
              Title="Home">
 
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Secondary}" StatusBarStyle="LightContent"/>
     </ContentPage.Behaviors>
+
+    <Grid>
+        <RefreshView Command="{Binding RefreshAsyncCommand}"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     IsVisible="{Binding IsNotBusy}">
+
+            <StackLayout>
+                <Frame WidthRequest="300">
+                    <VerticalStackLayout>
+                        <Label Text="Emission status:"
+                           FontSize="Large"
+                           HorizontalOptions="Center"/>
+                        <Label IsVisible="{Binding IsEmissionActive}"
+                           Text="ACTIVE"
+                           TextColor="Red"
+                           FontSize="Large"
+                           HorizontalOptions="Center"/>
+                        <Label IsVisible="{Binding IsEmissionInactive}"
+                           Text="INACTIVE"
+                           TextColor="Green"
+                           FontSize="40"
+                           HorizontalOptions="Center"/>
+
+                        <HorizontalStackLayout IsVisible="{Binding IsEmissionInactive}" 
+                                           HorizontalOptions="Center">
+                            <Label Text="Last emission was from "/>
+                            <Label Text="{Binding Emission.PreviousStart.TimeOfDay}"/>
+                            <Label Text=" to "/>
+                            <Label Text="{Binding Emission.PreviousEnd.TimeOfDay}"/>
+                        </HorizontalStackLayout>
+
+                    </VerticalStackLayout>
+                </Frame>
+            </StackLayout>
+
+        </RefreshView>
+
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Fill"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            Color="{StaticResource Primary}"
+            VerticalOptions="Center" />
+    </Grid>
 
 </ContentPage>
