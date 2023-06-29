@@ -1,9 +1,13 @@
-﻿namespace StalcraftCompanion;
+﻿using StalcraftCompanion.View;
+
+namespace StalcraftCompanion;
 
 public partial class AppShell : Shell
 {
 	public AppShell()
 	{
 		InitializeComponent();
-	}
+
+        Routing.RegisterRoute(nameof(DetailsPage), typeof(DetailsPage));
+    }
 }

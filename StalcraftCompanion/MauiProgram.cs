@@ -26,14 +26,21 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton(Connectivity.Current);
 
+		builder.Services.AddSingleton<ApiService>();
+
+		builder.Services.AddSingleton<HomeViewModel>();
         builder.Services.AddSingleton<HomePage>();
 
         builder.Services.AddSingleton<GameItemService>();
-        builder.Services.AddSingleton<GameItemsViewModel>();
+        builder.Services.AddSingleton<DatabaseViewModel>();
 		builder.Services.AddSingleton<DatabasePage>();
 
-        builder.Services.AddTransient<GameItemDetailsViewModel>();
+        builder.Services.AddTransient<DetailsViewModel>();
         builder.Services.AddTransient<DetailsPage>();
+
+        builder.Services.AddSingleton<AuthService>();
+        builder.Services.AddSingleton<ProfileViewModel>();
+        builder.Services.AddSingleton<ProfilePage>();
 
         return builder.Build();
 	}
