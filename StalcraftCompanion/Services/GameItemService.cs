@@ -1,30 +1,41 @@
-﻿using StalcraftCompanion.Model;
-using System.Net.Http.Json;
+﻿using RestSharp;
+using StalcraftCompanion.Model;
+using System.Text.Json;
 
 namespace StalcraftCompanion.Services
 {
-    public class GameItemService
+    public class GameItemService : BaseService
     {
-        readonly HttpClient httpClient;
-        List<GameItem> gameItemList;
+        private const string GITHUB_URL = "https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/ru";
 
-        public GameItemService()
-        {
-            httpClient = new HttpClient();
-        }
+        public GameItemService() : base() { }
 
         public async Task<List<GameItem>> GetGameItems()
         {
-            if (gameItemList?.Count > 0)
-                return gameItemList;
+            var request = new RestRequest("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/ru/listing.json");
+            var response = await Client.ExecuteAsync(request);
 
-            var response = await httpClient.GetAsync("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/ru/listing.json");
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode) return null;
+
+            var gameItems = JsonSerializer.Deserialize<List<GameItem>>(response.Content);
+
+            foreach (var gameItem in gameItems)
             {
-                gameItemList = await response.Content.ReadFromJsonAsync(GameItemContext.Default.ListGameItem);
+                gameItem.Data = GITHUB_URL + gameItem.Data;
+                gameItem.Icon = GITHUB_URL + gameItem.Icon;
             }
 
-            return gameItemList;
+            return gameItems;
+        }
+
+        public async Task<GameItemInfo> GetGameItem(string url)
+        {
+            var request = new RestRequest(url);
+            var response = await Client.ExecuteAsync(request);
+
+            if (!response.IsSuccessStatusCode) return null;
+
+            return JsonSerializer.Deserialize<GameItemInfo>(response.Content);
         }
     }
 }
