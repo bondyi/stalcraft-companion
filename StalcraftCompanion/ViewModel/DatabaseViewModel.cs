@@ -7,35 +7,28 @@ using System.Collections.ObjectModel;
 
 namespace StalcraftCompanion.ViewModel
 {
-    public partial class GameItemsViewModel : BaseViewModel
+    public partial class DatabaseViewModel : BaseViewModel
     {
-        private const string GITHUB_URL = "https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/ru";
-
         public ObservableCollection<GameItem> ObservableGameItems { get; } = new();
         private List<GameItem> gameItems = new();
 
         readonly GameItemService gameItemService;
-        readonly IConnectivity connectivity;
 
         [ObservableProperty]
         bool isRefreshing;
 
-        public bool IsInit { get; private set; }
-
-        public GameItemsViewModel(GameItemService gameItemService, IConnectivity connectivity)
+        public DatabaseViewModel(GameItemService gameItemService, IConnectivity connectivity) 
+            : base(connectivity)
         {
             this.gameItemService = gameItemService;
-            this.connectivity = connectivity;
-            IsInit = false;
         }
 
         [RelayCommand]
-        async Task GoToDetails(GameItem gameItem)
+        async Task GoToDetails(string itemUrl)
         {
-            if (gameItem == null)
-                return;
+            if (itemUrl == null) return;
 
-            await Shell.Current.GoToAsync(nameof(DetailsPage), true, new Dictionary<string, object> {{"GameItem", gameItem }});
+            await Shell.Current.GoToAsync(nameof(DetailsPage), true, new Dictionary<string, object> {{"itemUrl", itemUrl }});
         }
 
         [RelayCommand]
@@ -45,7 +38,7 @@ namespace StalcraftCompanion.ViewModel
 
             try
             {
-                if (connectivity.NetworkAccess != NetworkAccess.Internet)
+                if (IsInternetAvailable())
                 {
                     await Shell.Current.DisplayAlert("Error", "Please check internet and try again.", "OK");
                     return;
@@ -54,15 +47,6 @@ namespace StalcraftCompanion.ViewModel
                 IsBusy = true;
 
                 gameItems = await gameItemService.GetGameItems();
-
-                if (!IsInit)
-                {
-                    foreach (var gameItem in gameItems)
-                    {
-                        gameItem.Data = GITHUB_URL + gameItem.Data;
-                        gameItem.Icon = GITHUB_URL + gameItem.Icon;
-                    }
-                }
 
                 AddGameItems();
             }
@@ -73,7 +57,6 @@ namespace StalcraftCompanion.ViewModel
             finally
             {
                 IsBusy = false;
-                IsInit = true;
                 IsRefreshing = false;
             }
         }
