@@ -34,10 +34,4 @@ namespace StalcraftCompanion.Model
         [JsonPropertyName("name")]
         public Name Name { get; set; }
     }
-
-    [JsonSerializable(typeof(List<GameItem>))]
-    internal sealed partial class GameItemContext : JsonSerializerContext
-    {
-
-    }
 }
