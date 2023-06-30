@@ -34,7 +34,7 @@ namespace StalcraftCompanion.Services
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("https://exbo.net/oauth/authorize");
             stringBuilder.AppendLine($"?client_id={CLIENT_ID}");
-            stringBuilder.AppendLine("&redirect_uri=by.bondarik.stalcraftcompanion://");
+            stringBuilder.AppendLine("&redirect_uri=http://localhost");
             stringBuilder.AppendLine("&scope=");
             stringBuilder.AppendLine("&response_type=code");
 
@@ -42,7 +42,7 @@ namespace StalcraftCompanion.Services
             {
                 WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
                     new Uri(stringBuilder.ToString()),
-                    new Uri("by.bondarik.stalcraftcompanion://"));
+                    new Uri("stalcraftcompanion://"));
 
                 var code = authResult?.Get("code");
 
@@ -52,7 +52,7 @@ namespace StalcraftCompanion.Services
                 request.AddQueryParameter("client_secret", CLIENT_SECRET);
                 request.AddQueryParameter("client_secret", code);
                 request.AddQueryParameter("grant_type", "authorization_code");
-                request.AddQueryParameter("redirect_uri", "by.bondarik.stalcraftcompanion://");
+                request.AddQueryParameter("redirect_uri", "http://localhost");
 
                 var response = await Client.ExecuteAsync(request);
 

@@ -16,6 +16,9 @@
             <VerticalStackLayout>
                 <Label Text="{Binding GameItemInfo.Category, StringFormat='Category: {0}'}" />
                 <Label Text="{Binding GameItemInfo.Status.State, StringFormat='Status: {0}'}" />
+                <Label Text="{Binding GameItemInfo.InfoBlocks[0].Elements[0].Value, StringFormat='Rank: {0}'}" />
+                <Label Text="{Binding GameItemInfo.InfoBlocks[0].Elements[1].Formatted.Value.En, StringFormat='Class: {0}'}" />
+                <Label Text="{Binding GameItemInfo.InfoBlocks[0].Elements[2].Formatted.Value.En, StringFormat='Weight: {0}'}" />
             </VerticalStackLayout>
         </ScrollView>
 

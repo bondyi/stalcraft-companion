@@ -12,7 +12,7 @@ namespace StalcraftCompanion.Services
 
         public async Task<List<GameItem>> GetGameItems()
         {
-            var request = new RestRequest("https://raw.githubusercontent.com/EXBO-Studio/stalcraft-database/main/ru/listing.json");
+            var request = new RestRequest($"{GITHUB_URL}/listing.json");
             var response = await Client.ExecuteAsync(request);
 
             if (!response.IsSuccessStatusCode) return null;

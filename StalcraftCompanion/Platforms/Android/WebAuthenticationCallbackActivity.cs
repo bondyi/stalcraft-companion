@@ -9,5 +9,5 @@ namespace StalcraftCompanion;
               DataScheme = CALLBACK_SCHEME)]
 public class WebAuthenticationCallbackActivity : WebAuthenticatorCallbackActivity
 {
-    const string CALLBACK_SCHEME = "by.bondarik.stalcraftcompanion";
+    const string CALLBACK_SCHEME = "stalcraftcompanion";
 }

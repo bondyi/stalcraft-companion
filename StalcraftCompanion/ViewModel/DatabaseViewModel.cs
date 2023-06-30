@@ -48,7 +48,7 @@ namespace StalcraftCompanion.ViewModel
 
                 gameItems = await gameItemService.GetGameItems();
 
-                AddGameItems();
+                LoadMore();
             }
             catch (Exception ex)
             {
@@ -71,10 +71,13 @@ namespace StalcraftCompanion.ViewModel
         [RelayCommand]
         void LoadMore()
         {
-            AddGameItems();
+            for (var i = 0; i < 11; ++i)
+            {
+                AddGameItem();
+            }
         }
 
-        private void AddGameItems()
+        private void AddGameItem()
         {
             if (ObservableGameItems.Count == gameItems.Count) return;
 
