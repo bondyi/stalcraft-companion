@@ -5,7 +5,7 @@ namespace StalcraftCompanion.Model
     public class Emission
     {
         [JsonPropertyName("currentStart")]
-        public DateTime? CurrentStart { get; set; }
+        public DateTime CurrentStart { get; set; }
 
         [JsonPropertyName("previousStart")]
         public DateTime PreviousStart { get; set; }

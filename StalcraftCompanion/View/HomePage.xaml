@@ -22,24 +22,32 @@
                         <Label Text="Emission status:"
                            FontSize="Large"
                            HorizontalOptions="Center"/>
-                        <Label IsVisible="{Binding IsEmissionActive}"
-                           Text="ACTIVE"
-                           TextColor="Red"
-                           FontSize="Large"
-                           HorizontalOptions="Center"/>
-                        <Label IsVisible="{Binding IsEmissionInactive}"
-                           Text="INACTIVE"
-                           TextColor="Green"
-                           FontSize="40"
-                           HorizontalOptions="Center"/>
 
-                        <HorizontalStackLayout IsVisible="{Binding IsEmissionInactive}" 
-                                           HorizontalOptions="Center">
-                            <Label Text="Last emission was from "/>
-                            <Label Text="{Binding Emission.PreviousStart.TimeOfDay}"/>
-                            <Label Text=" to "/>
-                            <Label Text="{Binding Emission.PreviousEnd.TimeOfDay}"/>
-                        </HorizontalStackLayout>
+                        <StackLayout IsVisible="{Binding IsEmissionActive}">
+                            <Label Text="ACTIVE"
+                                   TextColor="Red"
+                                   FontSize="40"
+                                   HorizontalOptions="Center"/>
+
+                            <HorizontalStackLayout HorizontalOptions="Center">
+                                <Label Text="It starts in "/>
+                                <Label Text="{Binding Emission.CurrentStart.TimeOfDay}"/>
+                            </HorizontalStackLayout>
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding IsEmissionInactive}">
+                            <Label Text="INACTIVE"
+                                   TextColor="Green" 
+                                   FontSize="40"
+                                   HorizontalOptions="Center"/>
+
+                            <HorizontalStackLayout HorizontalOptions="Center">
+                                <Label Text="Last emission was from "/>
+                                <Label Text="{Binding Emission.PreviousStart.TimeOfDay}"/>
+                                <Label Text=" to "/>
+                                <Label Text="{Binding Emission.PreviousEnd.TimeOfDay}"/>
+                            </HorizontalStackLayout>
+                        </StackLayout>
 
                     </VerticalStackLayout>
                 </Frame>

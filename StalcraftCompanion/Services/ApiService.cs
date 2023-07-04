@@ -17,9 +17,12 @@ namespace StalcraftCompanion.Services
 
         public async Task<Emission> GetEmissionStatus()
         {
-            authService.GetAppAccessToken();
+            if (await SecureStorage.Default.GetAsync("app_access_token") == null)
+            {
+                authService.GetAppAccessToken();
+            }
 
-            var request = new RestRequest(BASE_URL + "ru/emission");
+            var request = new RestRequest(BASE_URL + "eu/emission");
             request.AddHeader("Authorization", $"Bearer {await SecureStorage.Default.GetAsync("app_access_token")}");
 
             var response = await Client.ExecuteAsync(request);
@@ -30,7 +33,5 @@ namespace StalcraftCompanion.Services
 
             return emission;
         }
-
-
     }
 }

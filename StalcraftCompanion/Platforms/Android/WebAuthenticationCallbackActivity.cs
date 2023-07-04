@@ -1,13 +1,14 @@
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 
-namespace StalcraftCompanion;
-
-[Activity(NoHistory = true, LaunchMode = LaunchMode.SingleTop, Exported = true)]
-[IntentFilter(new[] { Android.Content.Intent.ActionView },
-              Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable },
-              DataScheme = CALLBACK_SCHEME)]
-public class WebAuthenticationCallbackActivity : WebAuthenticatorCallbackActivity
+namespace StalcraftCompanion
 {
-    const string CALLBACK_SCHEME = "stalcraftcompanion";
+    [Activity(NoHistory = true, LaunchMode = LaunchMode.SingleTop, Exported = true)]
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+              Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable },
+              DataScheme = "http", DataHost = "stalcraftcompanion.bondarik.by", DataPathPrefix = "/callback")]
+    public class WebAuthenticationCallbackActivity : WebAuthenticatorCallbackActivity
+    {
+
+    }
 }

@@ -16,6 +16,7 @@ namespace StalcraftCompanion.ViewModel
         Emission emission;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsEmissionInactive))]
         bool isEmissionActive;
 
         public bool IsEmissionInactive => !IsEmissionActive;
@@ -42,7 +43,7 @@ namespace StalcraftCompanion.ViewModel
 
                 Emission = await service.GetEmissionStatus();
 
-                IsEmissionActive = Emission.CurrentStart != null;
+                IsEmissionActive = Emission.CurrentStart != DateTime.MinValue;
             }
             catch (Exception ex)
             {
